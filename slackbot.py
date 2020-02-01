@@ -1,8 +1,9 @@
 import sys
 import slack
-import json
 
-token = 'xoxb-925857114054-931679321232-4fE6ypn8lLr3h7IaFqJewRhX'
+f = open('token.txt', 'r')
+token = f.read()
+f.close()
 
 general = 'CT5KL1G3X'
 botId = 'UTDKZ9F6U'
@@ -17,5 +18,6 @@ latest = messages[0]
 
 if latest.get('type') == 'message':
     text = latest.get('text')
-    if text[0:6] == '!echo':
-        client.chat_postMessage(channel = '#general', text = 'lol')
+    if text[0:5] == '!echo' and len(text) > 6:
+        print(text[0:5])
+        client.chat_postMessage(channel = '#general', text = text[5:])
