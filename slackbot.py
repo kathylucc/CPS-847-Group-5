@@ -1,6 +1,7 @@
 import sys
 import slack
 
+#Read file
 f = open('token.txt', 'r')
 token = f.read()
 f.close()
