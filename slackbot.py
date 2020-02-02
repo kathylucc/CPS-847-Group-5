@@ -30,6 +30,7 @@ def weather(message, chan, wToken):
                 wData = json.loads(wData.read())
                 weather = wData.get('weather')
                 main = wData.get('main')
+                
             else:
                 client.chat_postMessage(channel = chan, text = 'Invalid parameter number!')
         elif text[0:cLen] == command:
