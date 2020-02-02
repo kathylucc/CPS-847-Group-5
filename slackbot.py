@@ -28,6 +28,10 @@ def weather(message, chan, wToken):
                 city = inputs[0]
                 wData = urllib.request.urlopen(weatherAPI + city + '&units=metric&APPID=' + wToken)
                 wData = json.loads(wData.read())
+                weather = wData.get('weather')
+                main = wData.get('main')
+            else:
+                client.chat_postMessage(channel = chan, text = 'Invalid parameter number!')
         elif text[0:cLen] == command:
             client.chat_postMessage(channel = chan, text = 'Please give me the name of the city!')
 
