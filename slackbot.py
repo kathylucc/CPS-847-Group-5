@@ -1,5 +1,6 @@
 import sys
 import slack
+import time
 
 #Read file
 f = open('token.txt', 'r')
@@ -24,3 +25,5 @@ while True:
         if text[0:5] == '!echo' and len(text) > 6:
             #Echo to chat
             client.chat_postMessage(channel = '#general', text = text[5:])
+    #STOP SPAMMING THE SERVER HARD!
+    time.sleep(2)
