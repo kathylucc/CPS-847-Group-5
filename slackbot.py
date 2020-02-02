@@ -15,29 +15,16 @@ def echo(message, chan):
             #Echo to chat
             client.chat_postMessage(channel = chan, text = text[cLen:])
 
-<<<<<<< HEAD
-def weather(message, chan):
-    #Check what type it read
-    command = '!weather'
-    cLen = len(command)
-    weatherAPI = 'api.openweathermap.org/data/2.5/weather?q='
-=======
 def weather(message, chan, wToken):
     #Check what type it read
     command = '!weather'
     cLen = len(command)
     weatherAPI = 'https://api.openweathermap.org/data/2.5/weather?q='
->>>>>>> BonusBranch
     if message.get('type') == 'message':
         text = message.get('text')
         if text[0:cLen] == command and len(text) > cLen:
             inputs = text[cLen:].split()
             if len(inputs) == 1:
-<<<<<<< HEAD
-                wData = urllib.request.urlopen(weatherAPI + inputs[0])
-                print(wData)
-            client.chat_postMessage(channel = chan, text = 'big test')
-=======
                 #Grab the city
                 city = inputs[0]
                 try:
@@ -90,7 +77,6 @@ def weather(message, chan, wToken):
                 client.chat_postMessage(channel = chan, text = 'Invalid parameter number!')
         elif text[0:cLen] == command:
             client.chat_postMessage(channel = chan, text = 'Please give me the name of the city!')
->>>>>>> BonusBranch
 
 #Read file
 f = open('token.txt', 'r')
@@ -114,10 +100,6 @@ while True:
     messages = history.get('messages')
     latest = messages[0]
     echo(latest, '#general')
-<<<<<<< HEAD
-    weather(latest, '#general')
-=======
     weather(latest, '#general', wToken)
->>>>>>> BonusBranch
     #STOP SPAMMING THE SERVER HARD!
     time.sleep(2)
