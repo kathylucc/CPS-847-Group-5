@@ -1,7 +1,7 @@
 import sys
 import slack
 import time
-import urllib
+import urllib.request
 import json
 
 #Takes in a message.
@@ -14,6 +14,23 @@ def echo(message, chan):
         if text[0:cLen] == command and len(text) > cLen:
             #Echo to chat
             client.chat_postMessage(channel = chan, text = text[cLen:])
+
+def weather(message, chan):
+    #Check what type it read
+    command = '!weather'
+    cLen = len(command)
+    weatherAPI = 'https://api.openweathermap.org/data/2.5/weather?q='
+    if message.get('type') == 'message':
+        text = message.get('text')
+        if text[0:cLen] == command and len(text) > cLen:
+            inputs = text[cLen:].split()
+            if len(inputs) == 1:
+                city = list(inputs[0])
+                city[0] = city[0].upper()
+                city = "".join(city)
+                wData = urllib.request.urlopen(weatherAPI + city)
+                print(wData)
+            client.chat_postMessage(channel = chan, text = 'big test')
 
 #Read file
 f = open('token.txt', 'r')
@@ -33,5 +50,6 @@ while True:
     messages = history.get('messages')
     latest = messages[0]
     echo(latest, '#general')
+    weather(latest, '#general')
     #STOP SPAMMING THE SERVER HARD!
     time.sleep(2)
