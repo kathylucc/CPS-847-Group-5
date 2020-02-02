@@ -1,6 +1,19 @@
 import sys
 import slack
 import time
+import urllib
+import json
+
+#Takes in a message.
+def echo(message, chan):
+    #Check what type it read
+    command = '!echo'
+    cLen = len(command)
+    if message.get('type') == 'message':
+        text = message.get('text')
+        if text[0:cLen] == command and len(text) > cLen:
+            #Echo to chat
+            client.chat_postMessage(channel = chan, text = text[cLen:])
 
 #Read file
 f = open('token.txt', 'r')
@@ -19,11 +32,6 @@ while True:
     history = client.conversations_history(channel = 'CT5KL1G3X')
     messages = history.get('messages')
     latest = messages[0]
-    #Check what type it read
-    if latest.get('type') == 'message':
-        text = latest.get('text')
-        if text[0:5] == '!echo' and len(text) > 6:
-            #Echo to chat
-            client.chat_postMessage(channel = '#general', text = text[5:])
+    echo(latest, '#general')
     #STOP SPAMMING THE SERVER HARD!
     time.sleep(2)
