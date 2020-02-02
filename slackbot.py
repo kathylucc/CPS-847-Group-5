@@ -15,7 +15,7 @@ def echo(message, chan):
             #Echo to chat
             client.chat_postMessage(channel = chan, text = text[cLen:])
 
-def weather(message, chan):
+def weather(message, chan, wToken):
     #Check what type it read
     command = '!weather'
     cLen = len(command)
@@ -25,16 +25,18 @@ def weather(message, chan):
         if text[0:cLen] == command and len(text) > cLen:
             inputs = text[cLen:].split()
             if len(inputs) == 1:
-                city = list(inputs[0])
-                city[0] = city[0].upper()
-                city = "".join(city)
-                wData = urllib.request.urlopen(weatherAPI + city)
+                city = inputs[0]
+                wData = urllib.request.urlopen(weatherAPI + city + '&APPID=' + wToken)
                 print(wData)
             client.chat_postMessage(channel = chan, text = 'big test')
 
 #Read file
 f = open('token.txt', 'r')
 token = f.read()
+f.close()
+
+f = open('weather.txt', 'r')
+wToken = f.read()
 f.close()
 
 #General server and bot ID
@@ -50,6 +52,6 @@ while True:
     messages = history.get('messages')
     latest = messages[0]
     echo(latest, '#general')
-    weather(latest, '#general')
+    weather(latest, '#general', wToken)
     #STOP SPAMMING THE SERVER HARD!
     time.sleep(2)
