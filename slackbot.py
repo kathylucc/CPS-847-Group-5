@@ -26,9 +26,10 @@ def weather(message, chan, wToken):
             inputs = text[cLen:].split()
             if len(inputs) == 1:
                 city = inputs[0]
-                wData = urllib.request.urlopen(weatherAPI + city + '&APPID=' + wToken)
-                print(wData)
-            client.chat_postMessage(channel = chan, text = 'big test')
+                wData = urllib.request.urlopen(weatherAPI + city + '&units=metric&APPID=' + wToken)
+                wData = json.loads(wData.read())
+        else:
+            client.chat_postMessage(channel = chan, text = 'Please give me the name of the city!')
 
 #Read file
 f = open('token.txt', 'r')
