@@ -1,7 +1,7 @@
 import sys
 import slack
 import time
-import urllib
+import urllib.request
 import json
 
 #Takes in a message.
@@ -22,9 +22,11 @@ def weather(message, chan):
     weatherAPI = 'api.openweathermap.org/data/2.5/weather?q='
     if message.get('type') == 'message':
         text = message.get('text')
-        print(text)
         if text[0:cLen] == command and len(text) > cLen:
-            #Echo to chat
+            inputs = text[cLen:].split()
+            if len(inputs) == 1:
+                wData = urllib.request.urlopen(weatherAPI + inputs[0])
+                print(wData)
             client.chat_postMessage(channel = chan, text = 'big test')
 
 #Read file
