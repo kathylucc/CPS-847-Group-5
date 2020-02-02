@@ -24,13 +24,19 @@ def weather(message, chan, wToken):
         text = message.get('text')
         if text[0:cLen] == command and len(text) > cLen:
             inputs = text[cLen:].split()
+            #Grab that city!
             if len(inputs) == 1:
                 city = inputs[0]
                 wData = urllib.request.urlopen(weatherAPI + city + '&units=metric&APPID=' + wToken)
                 wData = json.loads(wData.read())
                 weather = wData.get('weather')
                 main = wData.get('main')
-                
+                #Useful data
+                condition = weather[0].get('main')
+                current = main.get('temp')
+                feelsLike = main.get('feels_like')
+                tMin = main.get('temp_min')
+                tMax = main.get('temp_max')
             else:
                 client.chat_postMessage(channel = chan, text = 'Invalid parameter number!')
         elif text[0:cLen] == command:
