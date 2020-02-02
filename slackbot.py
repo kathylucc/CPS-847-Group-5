@@ -18,8 +18,9 @@ while True:
     history = client.conversations_history(channel = 'CT5KL1G3X')
     messages = history.get('messages')
     latest = messages[0]
-
+    #Check what type it read
     if latest.get('type') == 'message':
         text = latest.get('text')
         if text[0:5] == '!echo' and len(text) > 6:
+            #Echo to chat
             client.chat_postMessage(channel = '#general', text = text[5:])
